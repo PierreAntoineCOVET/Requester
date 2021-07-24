@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RequesterCli": {
+      "commandName": "Project",
+      "commandLineArgs": "-h wikipedia -e helloworld"
+    }
+  }
+}
