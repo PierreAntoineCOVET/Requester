@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs
+/Requester/obj
+/WebClient/obj
+/Requester/bin/Debug/net5.0
+/WebClient/bin/Debug/net5.0
