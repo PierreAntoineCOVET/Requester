@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "agaSM1+u02YCxOcnTuiRTB9mjMWVCO+IGpqcajND4lJQcm0b5wFohyJt+Y61v1vkArkeoTagFABaQTP22eNFhA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Pierre-Antoine\\source\\repos\\Requester\\WebClient\\WebClient.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Pierre-Antoine\\.nuget\\packages\\flurl\\3.0.2\\flurl.3.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
