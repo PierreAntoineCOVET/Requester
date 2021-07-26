@@ -14,6 +14,6 @@ namespace WebClient.Config
 
         public string UriAlias { get; set; }
 
-        public Dictionary<string, string> Payload { get; set; }
+        public string Payload { get; set; }
     }
 }

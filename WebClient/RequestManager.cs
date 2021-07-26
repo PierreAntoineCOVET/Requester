@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -16,13 +18,10 @@ namespace WebClient
     {
         private readonly IEnumerable<HostConfiguration> HostConfiguration;
 
-        private readonly HttpClient HttpClient;
-
         public RequestManager(IEnumerable<HostConfiguration> hostConfiguration)
         {
             HostConfiguration = hostConfiguration;
 
-            HttpClient = new HttpClient();
         }
 
         public async Task<RunResult> Request(string hostAlias, string endpointAlias, int times)
@@ -32,6 +31,13 @@ namespace WebClient
             if(targetHost == null)
             {
                 throw new ArgumentException($"Host '{hostAlias}' not found in config file.");
+            }
+
+            var httpClient = GetHttpClient(targetHost);
+
+            if (targetHost.IsUsingJwtAuthentication)
+            {
+                await SetToken(targetHost, httpClient);
             }
 
             var endpoint = targetHost.Endpoints.SingleOrDefault(e => e.UriAlias == endpointAlias);
@@ -55,7 +61,7 @@ namespace WebClient
                 var request = new HttpRequestMessage(new HttpMethod(endpoint.Method), uri);
 
                 stopWatch.Start();
-                var response = await HttpClient.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
                 stopWatch.Stop();
 
                 httpResponses.Add(await HandleResponse(response, stopWatch.ElapsedMilliseconds));
@@ -66,17 +72,50 @@ namespace WebClient
             return ComputeRunResult(httpResponses, uri, times);
         }
 
+        private async Task SetToken(HostConfiguration hostConfiguration, HttpClient httpClient)
+        {
+            var jwtEndpoint = hostConfiguration.Endpoints.SingleOrDefault(e => e.UriAlias == "Jwt");
+
+            if(jwtEndpoint == null)
+            {
+                throw new ArgumentException($@"If the host use JWT authentication then it must have a ""Jwt"" endpoint.");
+            }
+
+            var jwtUri  = BuildUri(hostConfiguration.HostBaseUri, jwtEndpoint);
+            var request = new HttpRequestMessage(new HttpMethod(jwtEndpoint.Method), jwtUri);
+
+            var response     = await httpClient.SendAsync(request);
+            var jsonDocument = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+            var accesToken   = jsonDocument.RootElement.GetProperty("accessToken").GetString();
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accesToken);
+        }
+
+        private HttpClient GetHttpClient(HostConfiguration hostConfiguration)
+        {
+            var httpClientHandler = new HttpClientHandler { AllowAutoRedirect = false };
+
+            if (hostConfiguration.IsUsingWindowsAuthentication)
+            {
+                httpClientHandler.UseDefaultCredentials = true;
+            }
+
+            var httpClient = new HttpClient(httpClientHandler);
+
+            return httpClient;
+        }
+
         private RunResult ComputeRunResult(IEnumerable<HttpResponse> httpResponses, Uri uri, int times)
 		{
             var requestTimes = httpResponses.Select(r => r.ResponseTimeMs).ToList();
             return new RunResult
             {
-                AverageTimeMs = requestTimes.Average(),
-                httpResponses = httpResponses,
-                LongestTimeMs = requestTimes.Max(),
+                AverageTimeMs  = requestTimes.Average(),
+                httpResponses  = httpResponses,
+                LongestTimeMs  = requestTimes.Max(),
                 ShortestTimeMs = requestTimes.Min(),
-                Times = times,
-                Uri = uri.AbsoluteUri
+                Times          = times,
+                Uri            = uri.AbsoluteUri
             };
 		}
 
@@ -96,13 +135,14 @@ namespace WebClient
             var url = new Url(hostBaseUri)
                 .AppendPathSegment(uriConfiguration.Path);
 
-			if (uriConfiguration.Payload?.Any() == true)
+            if (! string.IsNullOrWhiteSpace(uriConfiguration.Payload))
             {
-                url = url.SetQueryParams(uriConfiguration.Payload);
+                var payloadObject = JsonSerializer.Deserialize<Dictionary<string, object>>(uriConfiguration.Payload);
+                url = url.SetQueryParams(payloadObject);
 
             }
 
-			return url.ToUri();
+            return url.ToUri();
         }
     }
 }
