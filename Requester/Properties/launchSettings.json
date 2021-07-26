@@ -2,7 +2,7 @@
   "profiles": {
     "RequesterCli": {
       "commandName": "Project",
-      "commandLineArgs": "-h LeanaTest -e Autocomplete -r -m -o \"C:\\temp\\tra lala\\log.log\""
+      "commandLineArgs": "-h LeanaTest -e Autocomplete -r -m"
     }
   }
 }
