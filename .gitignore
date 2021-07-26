@@ -7,3 +7,5 @@
 /WebClient/obj
 /Requester/bin/Debug/net5.0
 /WebClient/bin/Debug/net5.0
+/RequesterGui/bin/Debug/net5.0-windows
+/RequesterGui/obj
