@@ -13,6 +13,14 @@
 		</Grid.RowDefinitions>
 		<TabControl Grid.Row="0" Name="HostTabControl">
 		</TabControl>
-		<Button Content="Add new Host" Name="AddHost" Click="AddHost_Click" Grid.Row="1" Width="130" />
+		<StackPanel  Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+			<StackPanel.Resources>
+				<Style TargetType="{x:Type Button}">
+					<Setter Property="Margin" Value="0,0,10,0"/>
+				</Style>
+			</StackPanel.Resources>
+			<Button Content="Add new Host" Name="AddHost" Click="AddHost_Click" Width="130" />
+			<Button Content="Save config" Name="SaveConfig" Click="SaveConfig_Click" Width="130" />
+		</StackPanel>
 	</Grid>
 </Window>
