@@ -24,6 +24,7 @@ namespace RequesterGui.Components
 		{
 			DataContext = this;
 			InitializeComponent();
+			AddHostEndpoint();
 		}
 
 		public static readonly DependencyProperty HostAliasProperty =
@@ -76,6 +77,22 @@ namespace RequesterGui.Components
 		{
 			get => (bool)GetValue(HostJwtAuthProperty);
 			set => SetValue(HostJwtAuthProperty, value);
+		}
+
+		private void AddEndpoint_Click(object sender, RoutedEventArgs e)
+		{
+			AddHostEndpoint();
+		}
+
+		private void AddHostEndpoint()
+		{
+			_ = HostEndpointControl.Items.Add(new TabItem
+			{
+				Header = "test",
+				Name = "test",
+				Content = new EndpointControl(),
+				IsSelected = true
+			});
 		}
 	}
 }

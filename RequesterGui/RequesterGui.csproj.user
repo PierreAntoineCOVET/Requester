@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Components\EndpointControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Components\HostControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -15,6 +18,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Components\EndpointControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Components\HostControl.xaml">
       <SubType>Designer</SubType>
     </Page>
