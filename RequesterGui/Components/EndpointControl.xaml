@@ -16,14 +16,14 @@
 			<ColumnDefinition Width="70"/>
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
-		<TextBox Text="Alias" Grid.Row="0" Grid.Column="0" />
+		<local:TextboxWatermarkAbleControl WaterMark="Alias" Text="{Binding HostAlias, ElementName=HostUc, Mode=TwoWay}"  Grid.Row="0" Grid.Column="0" />
 		<ComboBox Width="150" Grid.Row="0" Grid.Column="1">
 			<ComboBoxItem Content="Get" />
 			<ComboBoxItem Content="Post" />
 			<ComboBoxItem Content="Put" />
 			<ComboBoxItem Content="Delete" />
 		</ComboBox>
-		<TextBox Text="Path" Grid.Row="0" Grid.Column="2"/>
+		<local:TextboxWatermarkAbleControl WaterMark="Path" Text="{Binding HostAlias, ElementName=HostUc, Mode=TwoWay}" Grid.Row="0" Grid.Column="2" />
 		<TextBox Grid.Row="1" Grid.ColumnSpan="3" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
 	</Grid>
 </UserControl>

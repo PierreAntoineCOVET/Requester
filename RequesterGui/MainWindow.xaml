@@ -4,14 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RequesterGui"
+		xmlns:viewModel="clr-namespace:RequesterGui.ViewModels"
+		xmlns:vos="clr-namespace:WebClient.Vos;assembly=WebClient"
+		xmlns:view="clr-namespace:RequesterGui.Components"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+	<Window.DataContext>
+		<viewModel:MainViewModel />
+	</Window.DataContext>
+	<Window.Resources>
+		<DataTemplate DataType="{x:Type vos:HostConfiguration}">
+			<view:HostControl />
+		</DataTemplate>
+	</Window.Resources>
     <Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="40"/>
 		</Grid.RowDefinitions>
-		<TabControl Grid.Row="0" Name="HostTabControl">
+		<TabControl Grid.Row="0" ItemsSource="{Binding HostViewModels}">
 		</TabControl>
 		<StackPanel  Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
 			<StackPanel.Resources>
@@ -19,8 +30,8 @@
 					<Setter Property="Margin" Value="0,0,10,0"/>
 				</Style>
 			</StackPanel.Resources>
-			<Button Content="Add new Host" Name="AddHost" Click="AddHost_Click" Width="130" />
-			<Button Content="Save config" Name="SaveConfig" Click="SaveConfig_Click" Width="130" />
+			<Button Content="Add new Host" Command="{Binding CreateNewHost}" Width="130" />
+			<Button Content="Save config" Name="SaveConfig" Command="{Binding CreateNewHost}" Width="130" />
 		</StackPanel>
 	</Grid>
 </Window>

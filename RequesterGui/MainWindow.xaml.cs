@@ -24,35 +24,6 @@ namespace RequesterGui
 		public MainWindow()
 		{
 			InitializeComponent();
-
-			LoadHost();
-		}
-
-		private void LoadHost()
-		{
-
-		}
-
-		private void AddHost_Click(object sender, RoutedEventArgs e)
-		{
-			_ = HostTabControl.Items.Add(new TabItem
-			{
-				Header = "test",
-				Name = "test",
-				Content = new HostControl(),
-				IsSelected = true
-			});
-		}
-
-		private void SaveConfig_Click(object sender, RoutedEventArgs e)
-		{
-			foreach (var item in HostTabControl.Items)
-			{
-				if(item is TabItem tabItem && tabItem.Content is HostControl hostControl)
-				{
-					MessageBox.Show($"{hostControl.HostAlias}, {hostControl.HostUrl}, {hostControl.HostWindowsAuth}, {hostControl.HostJwtAuth}");
-				}
-			}
 		}
 	}
 }
