@@ -7,31 +7,59 @@
 		xmlns:viewModel="clr-namespace:RequesterGui.ViewModels"
 		xmlns:vos="clr-namespace:WebClient.Vos;assembly=WebClient"
 		xmlns:view="clr-namespace:RequesterGui.Components"
+		xmlns:interact="http://schemas.microsoft.com/expression/2010/interactivity"
+		xmlns:behaviors="clr-namespace:RequesterGui.Behaviors"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+		Name="mainWin">
 	<Window.DataContext>
 		<viewModel:MainViewModel />
 	</Window.DataContext>
 	<Window.Resources>
-		<DataTemplate DataType="{x:Type vos:HostConfiguration}">
-			<view:HostControl />
-		</DataTemplate>
 	</Window.Resources>
     <Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="40"/>
 		</Grid.RowDefinitions>
-		<TabControl Grid.Row="0" ItemsSource="{Binding HostViewModels}">
-		</TabControl>
-		<StackPanel  Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="120"></ColumnDefinition>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+
+		<TreeView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding HostMenuItems}">
+			<interact:Interaction.Behaviors>
+				<behaviors:BindableSelectedItemTreeViewBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
+			</interact:Interaction.Behaviors>
+			
+			<TreeView.Resources>
+				<HierarchicalDataTemplate DataType="{x:Type viewModel:HostMenuItem}" ItemsSource="{Binding Endpoints}">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{Binding HostName}" />
+						<TextBlock Text=" [" Foreground="Blue" />
+						<TextBlock Text="{Binding Endpoints.Count}" Foreground="Blue" />
+						<TextBlock Text="]" Foreground="Blue" />
+					</StackPanel>
+				</HierarchicalDataTemplate>
+
+				<DataTemplate DataType="{x:Type viewModel:EndpointMenuItem}">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{Binding EndpointName}" />
+					</StackPanel>
+				</DataTemplate>
+			</TreeView.Resources>
+		</TreeView
+		
+		<StackPanel  Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
 			<StackPanel.Resources>
 				<Style TargetType="{x:Type Button}">
 					<Setter Property="Margin" Value="0,0,10,0"/>
 				</Style>
 			</StackPanel.Resources>
 			<Button Content="Add new Host" Command="{Binding CreateNewHost}" Width="130" />
-			<Button Content="Save config" Name="SaveConfig" Command="{Binding CreateNewHost}" Width="130" />
+			<Button Content="Add new Endpoint" Command="{Binding CreateNewEndpoint}" Width="130" />
+			<Button Content="Save config" Command="{Binding SaveConfig}" Width="130" />
 		</StackPanel>
 	</Grid>
 </Window>

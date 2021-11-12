@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebClient.Config
+namespace WebClient.Vos
 {
     public class UriConfiguration
     {

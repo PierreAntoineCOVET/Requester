@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RequesterGui.Components"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+			 Name="HostUc">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
@@ -26,10 +27,11 @@
 				<Setter Property="Margin" Value="10,0,10,0"/>
 			</Style>
 		</Grid.Resources>
-		<local:TextboxWatermarkAbleControl WaterMark="Host alias" Grid.Column="0" Grid.Row="0" Text="{Binding HostNameAlias, Mode=TwoWay}" />
-		<local:TextboxWatermarkAbleControl WaterMark="Host Url" Grid.Column="1" Grid.Row="0" Text="{Binding HostBaseUri, Mode=TwoWay}" />
+		<local:TextboxWatermarkAbleControl WaterMark="Host alias" Grid.Column="0" Grid.Row="0" Text="{Binding HostNameAlias, ElementName=HostUc, Mode=TwoWay}" />
+		<!--<TextBlock Text="{Binding HostNameAlias}" />-->
+		<!--<local:TextboxWatermarkAbleControl WaterMark="Host Url" Grid.Column="1" Grid.Row="0" Text="{Binding HostBaseUri}" />
 		<CheckBox IsChecked="{Binding IsUsingWindowsAuthentication}" Grid.Column="2" Grid.Row="0">Use windows authentication</CheckBox>
-		<CheckBox IsChecked="{Binding IsUsingJwtAuthentication}" Grid.Column="3" Grid.Row="0">Use windows authentication</CheckBox>
+		<CheckBox IsChecked="{Binding IsUsingJwtAuthentication}" Grid.Column="3" Grid.Row="0">Use windows authentication</CheckBox>-->
 		<!--<TabControl x:Name="HostEndpointControl" Grid.Row="1" Grid.ColumnSpan="4">
 
 		</TabControl>
