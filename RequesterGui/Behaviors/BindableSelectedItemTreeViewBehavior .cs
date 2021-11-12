@@ -18,20 +18,8 @@ namespace RequesterGui.Behaviors
         }
 
         public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register("SelectedItem", typeof(object), typeof(BindableSelectedItemTreeViewBehavior), new UIPropertyMetadata(null, OnSelectedItemChanged));
+            DependencyProperty.Register("SelectedItem", typeof(object), typeof(BindableSelectedItemTreeViewBehavior));
 
-        private static void OnSelectedItemChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue is ISelectableItem newValue)
-            {
-                newValue.IsSelected = true;
-            }
-
-            if(e.OldValue is ISelectableItem oldValue)
-            {
-                oldValue.IsSelected = false;
-            }
-        }
         protected override void OnAttached()
         {
             base.OnAttached();

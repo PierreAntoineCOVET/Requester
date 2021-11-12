@@ -4,20 +4,16 @@ using System.Windows.Controls;
 
 namespace RequesterGui.ViewModels
 {
-	public class HostMenuItem : ISelectableItem
+	public class HostMenuItem
 	{
 		public string HostName { get; set; }
-
-		public bool IsSelected { get; set; }
 
 		public ObservableCollection<EndpointMenuItem> Endpoints { get; set; } = new ObservableCollection<EndpointMenuItem>();
 	}
 
-	public class EndpointMenuItem : ISelectableItem
+	public class EndpointMenuItem
 	{
 		public string EndpointName { get; set; }
-
-		public bool IsSelected { get; set; }
 
 		public HostMenuItem Host { get; set; }
 	}

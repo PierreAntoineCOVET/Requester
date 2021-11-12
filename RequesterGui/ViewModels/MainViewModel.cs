@@ -16,8 +16,8 @@ namespace RequesterGui.ViewModels
 
 		public ObservableCollection<HostMenuItem> HostMenuItems { get; set; } = new ObservableCollection<HostMenuItem>();
 
-		private ISelectableItem _SelectedItem { get; set; }
-		public ISelectableItem SelectedItem 
+		private object _SelectedItem { get; set; }
+		public object SelectedItem 
 		{
 			get => _SelectedItem;
 			set
@@ -64,9 +64,7 @@ namespace RequesterGui.ViewModels
 
 		private void ExecuteCreateNewEndpoint()
 		{
-			var selectedHost = HostMenuItems.SingleOrDefault(h => h.IsSelected);
-
-			if(selectedHost != null)
+			if(_SelectedItem is HostMenuItem selectedHost)
 			{
 				selectedHost.Endpoints.Add(new EndpointMenuItem
 				{

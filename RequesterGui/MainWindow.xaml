@@ -32,7 +32,7 @@
 			<interact:Interaction.Behaviors>
 				<behaviors:BindableSelectedItemTreeViewBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
 			</interact:Interaction.Behaviors>
-			
+
 			<TreeView.Resources>
 				<HierarchicalDataTemplate DataType="{x:Type viewModel:HostMenuItem}" ItemsSource="{Binding Endpoints}">
 					<StackPanel Orientation="Horizontal">
@@ -49,8 +49,8 @@
 					</StackPanel>
 				</DataTemplate>
 			</TreeView.Resources>
-		</TreeView
-		
+		</TreeView>
+
 		<StackPanel  Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
 			<StackPanel.Resources>
 				<Style TargetType="{x:Type Button}">
