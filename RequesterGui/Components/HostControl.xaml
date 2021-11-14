@@ -12,13 +12,14 @@
 			<ColumnDefinition />
 			<ColumnDefinition />
 			<ColumnDefinition />
-			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
+		
 		<Grid.RowDefinitions>
 			<RowDefinition Height="20" />
-			<RowDefinition />
-			<RowDefinition Height="40" />
+			<RowDefinition Height="20" />
+			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
+		
 		<Grid.Resources>
 			<Style TargetType="{x:Type local:TextboxWatermarkAbleControl}">
 				<Setter Property="Margin" Value="10,0,10,0"/>
@@ -27,15 +28,13 @@
 				<Setter Property="Margin" Value="10,0,10,0"/>
 			</Style>
 		</Grid.Resources>
-		<local:TextboxWatermarkAbleControl WaterMark="Host alias" Grid.Column="0" Grid.Row="0" Text="{Binding HostNameAlias, ElementName=HostUc, Mode=TwoWay}" />
-		<!--<TextBlock Text="{Binding HostNameAlias}" />-->
-		<!--<local:TextboxWatermarkAbleControl WaterMark="Host Url" Grid.Column="1" Grid.Row="0" Text="{Binding HostBaseUri}" />
-		<CheckBox IsChecked="{Binding IsUsingWindowsAuthentication}" Grid.Column="2" Grid.Row="0">Use windows authentication</CheckBox>
-		<CheckBox IsChecked="{Binding IsUsingJwtAuthentication}" Grid.Column="3" Grid.Row="0">Use windows authentication</CheckBox>-->
-		<!--<TabControl x:Name="HostEndpointControl" Grid.Row="1" Grid.ColumnSpan="4">
 
-		</TabControl>
-		<Button Content="Add new Endpoint" Name="AddEndpoint" Width="130" Click="AddEndpoint_Click" Grid.Row="2" Grid.Column="1" />
-		<Button Content="Send request" Name="SendRequest" Width="130" Grid.Row="2" Grid.Column="2" />-->
+		<!--<local:TextboxWatermarkAbleControl WaterMark="Host alias" Grid.Column="0" Grid.Row="0" Text="{Binding HostNameAlias, ElementName=HostUc, Mode=TwoWay}" />-->
+		<TextBox Grid.Column="0" Grid.Row="0" Text="{Binding HostNameAlias, ElementName=HostUc, Mode=TwoWay}" />
+		<CheckBox IsChecked="{Binding IsUsingWindowsAuthentication, ElementName=HostUc, Mode=TwoWay}" Grid.Column="1" Grid.Row="0">Use windows authentication</CheckBox>
+		<CheckBox IsChecked="{Binding IsUsingJwtAuthentication, ElementName=HostUc, Mode=TwoWay}" Grid.Column="2" Grid.Row="0">Use windows authentication</CheckBox>
+
+		<!--<local:TextboxWatermarkAbleControl WaterMark="Host Url" Grid.ColumnSpan="3" Grid.Row="1" Text="{Binding HostBaseUri, ElementName=HostUc, Mode=TwoWay}" />-->
+		<TextBox Grid.ColumnSpan="3" Grid.Row="1" Text="{Binding HostBaseUri, ElementName=HostUc, Mode=TwoWay}" />
 	</Grid>
 </UserControl>

@@ -24,5 +24,21 @@ namespace RequesterGui.Components
 		{
 			InitializeComponent();
 		}
+
+		public bool IsUsingWindowsAuthentication { get; set; }
+		public static readonly DependencyProperty IsUsingWindowsAuthenticationProperty =
+			DependencyProperty.Register("IsUsingWindowsAuthentication", typeof(bool), typeof(HostControl));
+
+		public bool IsUsingJwtAuthentication { get; set; }
+		public static readonly DependencyProperty IsUsingJwtAuthenticationProperty =
+			DependencyProperty.Register("IsUsingJwtAuthentication", typeof(bool), typeof(HostControl));
+
+		public string HostBaseUri { get; set; }
+		public static readonly DependencyProperty HostBaseUriProperty =
+			DependencyProperty.Register("HostBaseUri", typeof(string), typeof(HostControl));
+
+		public string HostNameAlias { get; set; }
+		public static readonly DependencyProperty HostNameAliasProperty =
+			DependencyProperty.Register("HostNameAlias", typeof(string), typeof(HostControl));
 	}
 }

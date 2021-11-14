@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RequesterGui"
-		xmlns:viewModel="clr-namespace:RequesterGui.ViewModels"
+		xmlns:viewModels="clr-namespace:RequesterGui.ViewModels"
 		xmlns:vos="clr-namespace:WebClient.Vos;assembly=WebClient"
 		xmlns:view="clr-namespace:RequesterGui.Components"
 		xmlns:interact="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -13,10 +13,12 @@
         Title="MainWindow" Height="450" Width="800"
 		Name="mainWin">
 	<Window.DataContext>
-		<viewModel:MainViewModel />
+		<viewModels:MainViewModel />
 	</Window.DataContext>
+
 	<Window.Resources>
 	</Window.Resources>
+	
     <Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
@@ -28,28 +30,35 @@
 			<ColumnDefinition Width="*"></ColumnDefinition>
 		</Grid.ColumnDefinitions>
 
-		<TreeView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding HostMenuItems}">
+		<TreeView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding HostViewModels}">
 			<interact:Interaction.Behaviors>
 				<behaviors:BindableSelectedItemTreeViewBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
 			</interact:Interaction.Behaviors>
 
 			<TreeView.Resources>
-				<HierarchicalDataTemplate DataType="{x:Type viewModel:HostMenuItem}" ItemsSource="{Binding Endpoints}">
+				<HierarchicalDataTemplate DataType="{x:Type viewModels:HostViewModel}" ItemsSource="{Binding Endpoints}">
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Text="{Binding HostName}" />
+						<TextBlock Text="{Binding HostNameAlias}" />
 						<TextBlock Text=" [" Foreground="Blue" />
 						<TextBlock Text="{Binding Endpoints.Count}" Foreground="Blue" />
 						<TextBlock Text="]" Foreground="Blue" />
 					</StackPanel>
 				</HierarchicalDataTemplate>
 
-				<DataTemplate DataType="{x:Type viewModel:EndpointMenuItem}">
+				<DataTemplate DataType="{x:Type viewModels:EndpointViewModel}">
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Text="{Binding EndpointName}" />
+						<TextBlock Text="{Binding UriAlias}" />
 					</StackPanel>
 				</DataTemplate>
 			</TreeView.Resources>
 		</TreeView>
+
+		<view:HostControl Grid.Row="0" Grid.Column="1"
+						  IsUsingJwtAuthentication="{Binding SelectedItem.IsUsingJwtAuthentication}"
+						  IsUsingWindowsAuthentication="{Binding SelectedItem.IsUsingWindowsAuthentication}"
+						  HostNameAlias="{Binding SelectedItem.HostNameAlias, Mode=TwoWay}"
+						  HostBaseUri="{Binding SelectedItem.HostBaseUri}"
+						  Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}" />
 
 		<StackPanel  Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
 			<StackPanel.Resources>

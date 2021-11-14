@@ -37,7 +37,7 @@ namespace RequesterGui.Core.Commands
 
 		public bool CanExecute()
 		{
-			return IsExecuting && (CanExecuteFunc?.Invoke() ?? true);
+			return !IsExecuting && (CanExecuteFunc?.Invoke() ?? true);
 		}
 
 		public async Task ExecuteAsync()
