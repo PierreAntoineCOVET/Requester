@@ -127,7 +127,7 @@ namespace WebClient
 
         }
 
-		private Uri BuildUri(string hostBaseUri, UriConfiguration uriConfiguration)
+		private Uri BuildUri(string hostBaseUri, EndpointConfiguration uriConfiguration)
         {
             var url = new Url(hostBaseUri)
                 .AppendPathSegment(uriConfiguration.Path);

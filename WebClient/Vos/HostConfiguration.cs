@@ -12,6 +12,6 @@ namespace WebClient.Vos
 
 		public string HostNameAlias { get; set; }
 
-		public IEnumerable<UriConfiguration> Endpoints { get; set; }
+		public IEnumerable<EndpointConfiguration> Endpoints { get; set; }
 	}
 }
