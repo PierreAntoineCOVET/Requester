@@ -47,7 +47,8 @@ namespace RequesterGui.Mapping
 			{
 				hostViewModel.Endpoints = new ObservableCollection<EndpointViewModel>(
 					hostEntity.Endpoints
-					.Select(e => EndpointMapper.EntityToViewModel(e)));
+					.Select(e => EndpointMapper.EntityToViewModel(e))
+					.OrderBy(e => e.UriAlias));
 			}
 
 			return hostViewModel;

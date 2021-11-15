@@ -17,9 +17,12 @@
 	</Window.DataContext>
 
 	<Window.Resources>
+		<Style x:Key="LibraryTreeViewItemStyle" TargetType="{x:Type TreeViewItem}">
+			<Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+		</Style>
 	</Window.Resources>
-	
-    <Grid>
+
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="40"/>
@@ -30,7 +33,7 @@
 			<ColumnDefinition Width="*"></ColumnDefinition>
 		</Grid.ColumnDefinitions>
 
-		<TreeView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding HostViewModels}">
+		<TreeView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding HostViewModels}" ItemContainerStyle="{StaticResource LibraryTreeViewItemStyle}">
 			<interact:Interaction.Behaviors>
 				<behaviors:BindableSelectedItemTreeViewBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
 			</interact:Interaction.Behaviors>

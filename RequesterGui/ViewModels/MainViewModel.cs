@@ -15,7 +15,7 @@ namespace RequesterGui.ViewModels
 {
 	public class MainViewModel : BaseViewModel
 	{
-		public ObservableCollection<HostViewModel> HostViewModels { get; set; }
+		public ObservableCollection<HostViewModel> HostViewModels { get; set; } = new ObservableCollection<HostViewModel>();
 
 		private HostViewModel _SelectedItem { get; set; }
 		public HostViewModel SelectedItem 
@@ -52,13 +52,29 @@ namespace RequesterGui.ViewModels
 			_ = LoadDatas();
 		}
 
+		private void SortHosts(IEnumerable<HostViewModel> hosts = null)
+		{
+			// defered execution is ruined by the clear
+			var orderedHosts = hosts == null
+				? HostViewModels.OrderBy(h => h.HostNameAlias).ToList()
+				: hosts.OrderBy(h => h.HostNameAlias).ToList();
+
+			HostViewModels?.Clear();
+
+			foreach (var host in orderedHosts)
+			{
+				HostViewModels.Add(host);
+			}
+		}
+
 		private async Task LoadDatas()
 		{
 			var hosts = await DbContext.Hosts
+				.Include(h => h.Endpoints)
+				.AsNoTracking()
 				.ToListAsync();
 
-			HostViewModels = new ObservableCollection<HostViewModel>(
-				hosts.Select(h => HostMapper.EntityToViewModel(h)));
+			SortHosts(hosts.Select(h => HostMapper.EntityToViewModel(h)));
 		}
 
 		private void ExecuteCreateNewEndpoint()
@@ -73,7 +89,9 @@ namespace RequesterGui.ViewModels
 
 		private void ExecuteCreateNewHostCommand()
 		{
-			HostViewModels.Add(new HostViewModel { HostNameAlias = $"Host n°{HostViewModels.Count + 1}" });
+			HostViewModels.Add(new HostViewModel { HostNameAlias = $"Host n°{HostViewModels.Count + 1}", IsSelected = true });
+
+			SortHosts();
 		}
 
 		private async Task ExecuteSaveConfigCommand()
@@ -82,7 +100,8 @@ namespace RequesterGui.ViewModels
 				.Select(h => HostMapper.ViewModelToEntity(h))
 				.ToList();
 
-			await DbContext.AddRangeAsync(hostEntities);
+			DbContext.UpdateRange(hostEntities);
+
 			await DbContext.SaveChangesAsync();
 		}
 	}
