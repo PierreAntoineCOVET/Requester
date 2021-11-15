@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RequesterGui.Entities
 {
-	class Endpoint
+	class EndpointEntity
     {
         public Guid Id { get; set; }
 
@@ -20,6 +20,6 @@ namespace RequesterGui.Entities
 
         public Guid HostId { get; set; }
 
-        public Host Host { get; set; }
+        public HostEntity Host { get; set; }
     }
 }

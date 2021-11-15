@@ -54,10 +54,10 @@
 		</TreeView>
 
 		<view:HostControl Grid.Row="0" Grid.Column="1"
-						  IsUsingJwtAuthentication="{Binding SelectedItem.IsUsingJwtAuthentication}"
-						  IsUsingWindowsAuthentication="{Binding SelectedItem.IsUsingWindowsAuthentication}"
+						  IsUsingJwtAuthentication="{Binding SelectedItem.IsUsingJwtAuthentication, Mode=TwoWay}"
+						  IsUsingWindowsAuthentication="{Binding SelectedItem.IsUsingWindowsAuthentication, Mode=TwoWay}"
 						  HostNameAlias="{Binding SelectedItem.HostNameAlias, Mode=TwoWay}"
-						  HostBaseUri="{Binding SelectedItem.HostBaseUri}"
+						  HostBaseUri="{Binding SelectedItem.HostBaseUri, Mode=TwoWay}"
 						  Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}" />
 
 		<StackPanel  Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">

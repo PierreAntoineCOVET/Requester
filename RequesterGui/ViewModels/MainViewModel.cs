@@ -1,6 +1,9 @@
-﻿using RequesterGui.Behaviors;
+﻿using Microsoft.EntityFrameworkCore;
+using RequesterGui.Behaviors;
 using RequesterGui.Core;
 using RequesterGui.Core.Commands;
+using RequesterGui.DbContext;
+using RequesterGui.Mapping;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,9 +15,7 @@ namespace RequesterGui.ViewModels
 {
 	public class MainViewModel : BaseViewModel
 	{
-		//private List<HostConfiguration> Hosts { get; set; } = new List<HostConfiguration>();
-
-		public ObservableCollection<HostViewModel> HostViewModels { get; set; } = new ObservableCollection<HostViewModel>();
+		public ObservableCollection<HostViewModel> HostViewModels { get; set; }
 
 		private HostViewModel _SelectedItem { get; set; }
 		public HostViewModel SelectedItem 
@@ -38,16 +39,36 @@ namespace RequesterGui.ViewModels
 
 		public IAsyncCommand SaveConfig { get; set; }
 
+		private readonly RequesterDbContext DbContext;
+
 		public MainViewModel()
 		{
 			CreateNewHost = new RelayCommand(ExecuteCreateNewHostCommand);
 			CreateNewEndpoint = new RelayCommand(ExecuteCreateNewEndpoint);
 			SaveConfig = new AsyncCommand(ExecuteSaveConfigCommand);
+
+			DbContext = new RequesterDbContext();
+
+			_ = LoadDatas();
+		}
+
+		private async Task LoadDatas()
+		{
+			var hosts = await DbContext.Hosts
+				.ToListAsync();
+
+			HostViewModels = new ObservableCollection<HostViewModel>(
+				hosts.Select(h => HostMapper.EntityToViewModel(h)));
 		}
 
 		private void ExecuteCreateNewEndpoint()
 		{
-			SelectedItem.Endpoints.Add(new EndpointViewModel { UriAlias = $"Endpoint n°{SelectedItem.Endpoints.Count + 1}" });
+			if(_SelectedItem == null)
+			{
+				return;
+			}
+
+			_SelectedItem.Endpoints.Add(new EndpointViewModel { UriAlias = $"Endpoint n°{SelectedItem.Endpoints.Count + 1}" });
 		}
 
 		private void ExecuteCreateNewHostCommand()
@@ -57,7 +78,12 @@ namespace RequesterGui.ViewModels
 
 		private async Task ExecuteSaveConfigCommand()
 		{
-			await Task.Delay(10);
+			var hostEntities = HostViewModels
+				.Select(h => HostMapper.ViewModelToEntity(h))
+				.ToList();
+
+			await DbContext.AddRangeAsync(hostEntities);
+			await DbContext.SaveChangesAsync();
 		}
 	}
 }

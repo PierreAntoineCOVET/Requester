@@ -8,6 +8,8 @@ namespace RequesterGui.ViewModels
 {
 	public class EndpointViewModel
 	{
+		public Guid Id { get; set; }
+
 		public string Method { get; set; }
 
 		public string Path { get; set; }
@@ -15,5 +17,7 @@ namespace RequesterGui.ViewModels
 		public string UriAlias { get; set; }
 
 		public string Payload { get; set; }
+
+		public Guid HostId { get; set; }
 	}
 }

@@ -1,35 +1,30 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RequesterGui.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RequesterGui.DbContext
 {
-	class RequesterContext : Microsoft.EntityFrameworkCore.DbContext
+	class RequesterDbContext : Microsoft.EntityFrameworkCore.DbContext
 	{
-		public DbSet<Host> Hosts { get; set; }
-		public DbSet<Endpoint> Endpoints { get; set; }
+		public DbSet<HostEntity> Hosts { get; set; }
+		public DbSet<EndpointEntity> Endpoints { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			base.OnConfiguring(optionsBuilder);
 
-			optionsBuilder.UseSqlite("Data Source=mydb.db;Version=3;");
+			optionsBuilder.UseSqlite("Data Source=requester.db");
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<Host>()
+			modelBuilder.Entity<HostEntity>()
 				.HasKey(h => h.Id);
 
-			modelBuilder.Entity<Endpoint>()
+			modelBuilder.Entity<EndpointEntity>()
 				.HasKey(e => e.Id);
-			modelBuilder.Entity<Endpoint>()
+			modelBuilder.Entity<EndpointEntity>()
 				.HasOne(e => e.Host)
 				.WithMany(h => h.Endpoints)
 				.HasForeignKey(e => e.HostId);

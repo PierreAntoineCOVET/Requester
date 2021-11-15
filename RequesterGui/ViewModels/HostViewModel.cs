@@ -9,6 +9,8 @@ namespace RequesterGui.ViewModels
 {
 	public class HostViewModel
 	{
+		public Guid Id { get; set; }
+
 		public bool IsUsingWindowsAuthentication { get; set; }
 
 		public bool IsUsingJwtAuthentication { get; set; }

@@ -29,12 +29,10 @@
 			</Style>
 		</Grid.Resources>
 
-		<!--<local:TextboxWatermarkAbleControl WaterMark="Host alias" Grid.Column="0" Grid.Row="0" Text="{Binding HostNameAlias, ElementName=HostUc, Mode=TwoWay}" />-->
-		<TextBox Grid.Column="0" Grid.Row="0" Text="{Binding HostNameAlias, ElementName=HostUc, Mode=TwoWay}" />
+		<local:TextboxWatermarkAbleControl WaterMark="Host alias" Grid.Column="0" Grid.Row="0" Text="{Binding HostNameAlias, ElementName=HostUc, Mode=TwoWay}" />
 		<CheckBox IsChecked="{Binding IsUsingWindowsAuthentication, ElementName=HostUc, Mode=TwoWay}" Grid.Column="1" Grid.Row="0">Use windows authentication</CheckBox>
 		<CheckBox IsChecked="{Binding IsUsingJwtAuthentication, ElementName=HostUc, Mode=TwoWay}" Grid.Column="2" Grid.Row="0">Use windows authentication</CheckBox>
 
-		<!--<local:TextboxWatermarkAbleControl WaterMark="Host Url" Grid.ColumnSpan="3" Grid.Row="1" Text="{Binding HostBaseUri, ElementName=HostUc, Mode=TwoWay}" />-->
-		<TextBox Grid.ColumnSpan="3" Grid.Row="1" Text="{Binding HostBaseUri, ElementName=HostUc, Mode=TwoWay}" />
+		<local:TextboxWatermarkAbleControl WaterMark="Host Url" Grid.ColumnSpan="3" Grid.Row="1" Text="{Binding HostBaseUri, ElementName=HostUc, Mode=TwoWay}" />
 	</Grid>
 </UserControl>

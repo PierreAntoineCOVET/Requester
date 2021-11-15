@@ -9,11 +9,11 @@ namespace RequesterGui.Core
 {
 	class HostsLibrary
 	{
-		public IList<Host> Hosts { get; set; }
+		public IList<HostEntity> Hosts { get; set; }
 
 		public void AddNewHost()
 		{
-			var newHost = new Host
+			var newHost = new HostEntity
 			{
 
 			};
